@@ -6,5 +6,5 @@ class BerryQueryHelper():
         pass
 
     @staticmethod
-    def get_berry_by_id():
+    def get_berry_by_id(id):
         pass
