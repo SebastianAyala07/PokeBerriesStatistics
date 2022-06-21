@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from datetime import datetime
 from app.common.berry_helper import BerryQueryHelper
 import pandas as pd
@@ -40,6 +41,12 @@ class BerryStatistics():
         frequency_time = dict(growth_time_series.value_counts())
         for key, value in frequency_time.items():
             frequency_time[key] = int(value)
+        plt.bar(frequency_time.keys(), frequency_time.values(), color="#c2d647")
+        plt.xticks(list(frequency_time.keys()))
+        plt.xlabel("Growth Time")
+        plt.ylabel("Frequency")
+        plt.title("PokeAPI Histogram")
+        plt.savefig("static/images/histogram.png")
         data_to_return = {
             "berries_names": names,
             "min_growth_time": int(growth_time_series.min()),
