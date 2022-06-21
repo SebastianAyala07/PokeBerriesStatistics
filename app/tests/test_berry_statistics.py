@@ -47,13 +47,19 @@ def test_describe_statistics_data(berries):
     }
     for key, data_type in keys_assert.items():
         assert isinstance(data_statistics.get(key, None), data_type)
-    list_growth_time = [ time for time in my_berry_statistics_test.berries ]
-    assert data_statistics.get("min_growth_time", None) == np.min(list_growth_time)
+    list_growth_time = [
+        berry.growth_time for berry in my_berry_statistics_test.berries
+    ]
+    assert data_statistics.get("min_growth_time", None) == int(np.min(list_growth_time))
     assert data_statistics.get("max_growth_time", None) == np.max(list_growth_time)
     assert data_statistics.get("median_growth_time", None) == np.median(list_growth_time)
-    assert data_statistics.get("variance_growth_time", None) == np.var(list_growth_time)
+    assert (
+        data_statistics.get("variance_growth_time", None) - np.var(list_growth_time, axis=0) <= 1
+    )
     assert data_statistics.get("mean_growth_time", None) == np.mean(list_growth_time)
     (growth_time_expected_list, freq_expected) = np.unique(list_growth_time, return_counts=True)
+    growth_time_expected_list = list(growth_time_expected_list)
+    freq_expected = list(freq_expected)
     for growth_time, freq in data_statistics.get("frequency_growth_time").items():
         index = growth_time_expected_list.index(growth_time)
         assert freq_expected[index] == freq
@@ -62,7 +68,7 @@ def test_query_helper_get_all_berries():
     result = BerryQueryHelper.get_all_berries()
     assert isinstance(result, list)
 
-def test_query_helper_get_all_berries():
+def test_query_helper_get_berry_by_id():
     result = BerryQueryHelper.get_berry_by_id(1)
     assert isinstance(result, dict)
 

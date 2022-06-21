@@ -13,10 +13,6 @@ def create_app(settings_module):
 
     app.url_map.strict_slashes = False
 
-    @app.route('/')
-    def home():
-        return f"Hello World this environment is: {settings_module}"
-
     register_error_handlers(app)
 
     return app
