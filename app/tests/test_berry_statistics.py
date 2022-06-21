@@ -1,5 +1,4 @@
 import os
-import requests
 import numpy as np
 import pytest
 from app import create_app

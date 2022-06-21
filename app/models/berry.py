@@ -1,3 +1,4 @@
+from datetime import datetime
 from app.common.berry_helper import BerryQueryHelper
 import pandas as pd
 
@@ -11,10 +12,8 @@ class Berry():
 
     @staticmethod
     def create_berries_from_list(berries_json):
-        berries_to_return = []
-        for berry_data in berries_json:
-            temp_berry_obj = Berry(**berry_data)
-            berries_to_return.append(temp_berry_obj)
+        start = datetime.now()
+        berries_to_return = [ Berry(**berry_data) for berry_data in berries_json ]
         return berries_to_return
 
     def __set_id(self):
